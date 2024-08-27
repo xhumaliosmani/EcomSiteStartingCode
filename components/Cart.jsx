@@ -16,29 +16,7 @@ const Cart = () => {
     updateItemQuantity,
   } = useCartStore();
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
-  const handleRemove = (event, id) => {
-    event.preventDefault();
-    event.stopPropagation();
-    removeItem(id);
-  };
-
-  const handleQuantityChange = (event, id, newQuantity) => {
-    event.preventDefault();
-    event.stopPropagation();
-    if (newQuantity < 1) {
-      removeItem(id);
-    } else {
-      updateItemQuantity(id, newQuantity);
-    }
-  };
-
-  const handleCheckout = () => {
-    window.location.href = "/checkout";
-  };
+  
 
   if (isLoading) {
     return (

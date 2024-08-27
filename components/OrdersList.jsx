@@ -15,40 +15,7 @@ const OrdersList = () => {
 
   const observer = useRef();
 
-  const lastOrderElementRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        setPage((prevPage) => prevPage + 1);
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore]
-  );
-
-  useEffect(() => {
-    if (session?.user?.email) {
-      fetchOrders();
-    }
-  }, [page, session]);
-
-  const fetchOrders = async () => {
-    try {
-      setLoadingMore(true);
-      const res = await axios.get(
-        `/api/orders?page=${page}&limit=10&email=${session.user.email}`
-      );
-      setOrders((prevOrders) => [...prevOrders, ...res.data.orders]);
-      setHasMore(res.data.hasMore);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
-  };
-
+  
   if(!session){
     return <p>Please login to use this functionality</p>
   }

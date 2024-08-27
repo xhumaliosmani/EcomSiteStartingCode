@@ -22,24 +22,7 @@ const FeaturedProduct = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchFeaturedProduct = async () => {
-    try {
-      const timestamp = new Date().getTime();
-      const response = await axios.get(`api/product/featured?t=${timestamp}`);
-      setFeaturedWatch1(response.data);
-    } catch (error) {
-      setError(
-        error.response?.data?.message || "Failed to fetch featured product"
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchFeaturedProduct();
-  }, []);
-
+  
   return (
     <header className="relative bg-gradient-to-r from-slate-300 to-slate-400 text-white sm:h-[58rem] flex items-center overflow-hidden">
       {/* Animated background elements */}

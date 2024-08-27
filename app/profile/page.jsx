@@ -38,52 +38,7 @@ const ProfilePage = () => {
   });
   const [activeTab, setActiveTab] = useState("profile");
 
-  useEffect(() => {
-    if (session?.user) {
-      setProfile({
-        name: session.user.name || "",
-        email: session.user.email || "",
-        admin: session.user.admin || false,
-        image: session.user.profileImage || "",
-      });
-    }
-  }, [session]);
-
-  const handleEdit = () => setIsEditing(true);
-
-  const handleSave = async () => {
-    setIsEditing(false);
-    try {
-      const res = await axios.put("/api/updateUser", {
-        email: profile.email,
-        name: profile.name,
-        newEmail: profile.email,
-      });
-
-      if (res.status === 200) {
-        await update({
-          ...session,
-          user: { ...session?.user, name: profile.name, email: profile.email },
-        });
-        setProfile((prevProfile) => ({
-          ...prevProfile,
-          name: profile.name,
-          email: profile.email,
-        }));
-        toast.success("Updated");
-      } else {
-        toast.error("error");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("error");
-    }
-  };
-
-  const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
-  };
-
+  
   const renderProfileContent = () => (
     <Card className="w-full  bg-white shadow-lg rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl">
       <CardHeader className="bg-[#535C91] p-4 sm:p-6">

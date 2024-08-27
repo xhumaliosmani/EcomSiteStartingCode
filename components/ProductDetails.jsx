@@ -12,26 +12,7 @@ const ProductDetails = ({ product }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
 
-  const handleAddToCart = async () => {
-    addItem(product);
-  };
-  const handleToggleWishlist = async () => {
-    try {
-      if (isWishlisted) {
-        await axios.delete("/api/wishlist", {
-          data: { productId: product._id },
-        });
-      } else {
-        await axios.post("/api/wishlist", {
-          data: { productId: product._id },
-        });
-      }
-      setIsWishlisted(isWishlisted);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  
   // Fallback image URL
   const fallbackImageUrl = "https://via.placeholder.com/400";
 

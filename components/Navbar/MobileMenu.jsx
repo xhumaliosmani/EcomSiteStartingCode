@@ -26,20 +26,7 @@ const MobileMenu = ({
 }) => {
   const { data: sessionData } = useSession();
 
-  const handleSearchClick = () => {
-    setSearchOpen(!searchOpen);
-  };
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
+ //logic here
 
   return (
     <div

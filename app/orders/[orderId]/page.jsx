@@ -16,24 +16,7 @@ export default function OrderDetails({ params }) {
   const [error, setError] = useState(null);
   const { orderId } = params;
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const res = await axios.get(`/api/orders/${orderId}`);
-        if (res.status === 200) {
-          console.log(res.data);
-          
-          setOrder(res.data);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchOrder();
-  }, [orderId]);
-
+  
   if(loading){
     return (
         <div className="flex justify-center items-center h-screen">

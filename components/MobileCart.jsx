@@ -17,31 +17,7 @@ const MobileCart = ({ isOpen, onClose }) => {
 
   const cartRef = useRef(null);
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    }
-    return () => {
-      document.body.style.overflow = originalStyle;
-    };
-  }, [isOpen]);
-
-  const handleCheckout = () => {
-    window.location.href = "/checkout";
-  };
-
-  const handleQuantityChange = (itemId, newQuantity) => {
-    if (newQuantity < 1) {
-      removeItem(itemId);
-    } else {
-      updateItemQuantity(itemId, newQuantity);
-    }
-  };
+  
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">

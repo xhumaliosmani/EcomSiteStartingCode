@@ -15,46 +15,7 @@ export default function SearchedProducts() {
   const [wishlist, setWishlist] = useState([]);
   const { data: session } = useSession();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(`/api/products/${searchTerm}`);
-        setProducts(res.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, [searchTerm]);
-
-  useEffect(() => {
-    const fetchWishlist = async () => {
-      if (session) {
-        try {
-          const res = await axios.get("/api/wishlist");
-          if (Array.isArray(res.data.items)) {
-            setWishlist(res.data.items.map((item) => item._id));
-          } else {
-            console.log(error);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-     fetchWishlist();
-  }, [session]);
-
-  const handleWishlistUpdate = (productId, isAdding)=> {
-    if(isAdding){
-        setWishlist([...wishlist, productId]);
-    } else {
-        setWishlist(wishlist.filter((id)=> id !== productId))
-    }
-  }
+  
 
   if(loading || error){
     return <LoadingErrorComponent loading={loading} error={error}/>

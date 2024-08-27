@@ -17,64 +17,7 @@ const Wishlist = () => {
   const addItem = useCartStore((state) => state.addItem);
   const obeserver = useRef();
 
-  const lastItemElementRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (obeserver.current) obeserver.current.disconnect();
-      obeserver.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage((prevPage) => prevPage + 1);
-        }
-      });
-    },
-    [loading, hasMore]
-  );
-
-  useEffect(() => {
-    const fetchWishlist = async () => {
-      try {
-        setLoadingMore(true);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        const res = await axios.get(`/api/wishlist?page=${page}&limit=10`);
-        if (res.data && Array.isArray(res.data.items)) {
-          setWishlistItems((prevItem) => {
-            const newItem = res.data.items.filter(
-              (item) => !prevItem._id === item._id
-            );
-            return [...prevItem, ...newItem];
-          });
-          setHasMore(res.data.hasMore);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-        setLoadingMore(false);
-      }
-    };
-
-    fetchWishlist();
-  }, [page]);
-
-  const removeFromWishlist = async () => {
-    try {
-      await axios.delete("/api/wishlist", { data: { productId } });
-      toast.success("Removed from wishlist");
-      setWishlistItems((prevItem) =>
-        prevItem.filter((item) => item._id !== productId)
-      );
-      if (wishlistItems.length <= 10 && hasMore) {
-        setPage((prevPage) => prevPage + 1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleAddToCart = (product) => {
-    addItem(product);
-    toast.success("Added product to cart");
-  };
+  
 
   return (
     <Card className="w-full bg-white shadow-lg rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl">

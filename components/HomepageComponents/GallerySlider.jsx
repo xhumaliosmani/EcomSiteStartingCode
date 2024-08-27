@@ -22,39 +22,7 @@ const GallerySlider = () => {
   const [currentIndex, setCurrentIndex] = useState(2);
   const [direction, setDirection] = useState(0);
 
-  const nextSlide = () => {
-    setDirection(1);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-  const prevSlide = () => {
-    setDirection(-1);
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
-
-  const getVisibleImages = () => {
-    const visibleIndices = [
-      (currentIndex - 2 + images.length) % images.length,
-      (currentIndex - 1 + images.length) % images.length,
-      currentIndex,
-      (currentIndex + 1) % images.length,
-      (currentIndex + 2) % images.length,
-    ];
-    return visibleIndices.map((index) => images[index]);
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "ArrowLeft") {
-        prevSlide();
-      } else if (event.key === "ArrowRight") {
-        nextSlide();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  
 
   const variants = {
     enter: (direction) => ({

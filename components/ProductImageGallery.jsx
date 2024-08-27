@@ -7,38 +7,7 @@ const ProductImageGallery = ({ product }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const thumbnailRef = useRef(null);
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () => nextImage(),
-    onSwipedRight: () => prevImage(),
-    preventDefaultTouchmoveEvent: true,
-    trackMouse: true,
-  });
-
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
-    );
-  };
-
-  useEffect(() => {
-    if (thumbnailRef.current) {
-      const activeThumbnail = thumbnailRef.current.children[currentImageIndex];
-      const offsetLeft = activeThumbnail.offsetLeft;
-      const offsetWidth = activeThumbnail.offsetWidth;
-      const containerWidth = thumbnailRef.current.offsetWidth;
-      const scrollPosition =
-        offsetLeft - (containerWidth / 2 - offsetWidth / 2);
-      thumbnailRef.current.scrollTo({
-        left: scrollPosition,
-        behavior: "smooth",
-      });
-    }
-  }, [currentImageIndex]);
+  
 
   return (
     <div className="md:w-1/2 p-6">

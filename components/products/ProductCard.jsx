@@ -15,60 +15,7 @@ export default function ProductCard({ product, onWishlistUpdate }) {
   const addItem = useCartStore((state) => state.addItem);
   const [wishlistItems, setWishlistItems] = useState([]);
 
-  useEffect(() => {
-    const checkWishlistStatus = async () => {
-      if (session) {
-        try {
-          const response = await axios.get(`/api/wishlistAll`);
-          setWishlistItems(response.data.items);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    checkWishlistStatus();
-  }, [session]);
-
-  const isInWishlist = useMemo(()=> {
-    return wishlistItems.some((item)=> item._id === product._id);
-
-  }, [wishlistItems, product._id]);
-
-  const handleAddToCart = (e)=> {
-    e.preventDefault();
-    addItem(product);
-    toast.success("Product added to Cart!")
-  }
-
-  const toggleWishlist = async (e)=> {
-    e.preventDefault();
-    if(!session){
-        router.push("/login")
-        return
-    }
-    try {
-        if(isInWishlist){
-            await axios.delete("/api/wishlist", {
-              data: { productId: product._id },
-            });
-            setWishlistItems((prevItems)=> prevItems.filter((item)=> item._id !== product._id))
-            toast.success("Removed the item from wishlist")
-        } else {
-            await axios.put("/api/wishlist", { productId: product._id });
-            setWishlistItems((prevItems) =>
-              [...prevItems, product]
-            );
-            toast.success("Added the item to the wishlist");
-        }
-        if(onWishlistUpdate){
-            onWishlistUpdate();
-        }
-    } catch (error) {
-        console.log(error);
-        toast.error("Something went wrong with the wishlist")
-        
-    }
-  }
+  
 
   return (
     <div

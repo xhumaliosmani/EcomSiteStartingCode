@@ -23,63 +23,7 @@ const Orders = () => {
   const [totalOrders, setTotalOrders] = useState(0);
   const limit = 5;
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get(
-          `/api/ordersAdmin?page=${page}&limit=${limit}`
-        );
-        console.log(res.data);
-        console.log(Math.ceil(totalOrders / limit));
-        
-
-        setOrders(res.data.orders);
-        setHasMore(res.data.hasMore);
-        setTotalOrders(res.data.totalOrders);
-      } catch (error) {
-        console.log(error);
-      }
-      setLoading(false);
-    };
-    fetchOrders();
-  }, [page]);
-
-  const handleNextPage = () => {
-    if (hasMore) {
-      setPage(page + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
-
-  const handleMarkAsDelivered = async (orderId) => {
-    try {
-      const res = await axios.put("api/orders", { orderId });
-      if (res.data.order) {
-        setOrders(
-          orders.map((order) =>
-            order._id === orderId ? { ...order, status: "delivered" } : order
-          )
-        );
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   
-  const totalPages = Math.ceil(totalOrders / limit);
-
-  useEffect(() => {
-    if (status !== "authenticated" && !session?.user) {
-      router.push("/");
-    }
-  }, [status, session, router]);
 
   return (
     <div className="bg-gray-100 min-h-screen p-4 sm:p-6">

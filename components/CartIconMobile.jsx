@@ -12,14 +12,7 @@ const CartIconMobile = () => {
   const { items, getTotalItems } = useCartStore();
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  useEffect(() => {
-    setIsLoading(false);
-    setItemCount(getTotalItems());
-  }, [items, getTotalItems]);
-
-  if (isLoading) {
-    return null; // Or a loading placeholder if you prefer
-  }
+  
 
   return (
     <div>

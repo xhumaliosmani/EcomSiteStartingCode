@@ -24,45 +24,7 @@ export default function ProductGrid({
     "Tudor",
   ];
 
-  useEffect(() => {
-    setProducts(initialProducts);
-  }, [initialProducts]);
-
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-  const startIndex = (currentPage -1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentProducts = products.slice(startIndex, endIndex);
-
-  const handleSort = (order)=> {
-    setSortOrder(order);
-    const sortedProducts = [...products].sort((a,b)=> {
-      if(order === "highToLow") {
-        return b.price - a.price;
-      } else if (order === "lowToHigh") {
-        return a.price - b.price;
-      }
-      return 0;
-    });
-    setProducts(sortedProducts);
-    setCurrentPage(1);
-
-  }
-
   
-
-  const handleBrandChange = (brand) => {
-    setSelectedBrand(brand);
-    if (brand === "All") {
-      setProducts(initialProducts);
-    } else {
-      router.push(
-        `/products/brand/${encodeURIComponent(
-          brand.toLowerCase().replace(/\s+/g, "")
-        )}`
-      );
-    }
-    setCurrentPage(1);
-  };
 
   return (
     <div className="container mx-auto px-[1px] py-8">
